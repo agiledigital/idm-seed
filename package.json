@@ -1,0 +1,51 @@
+{
+  "name": "@agiledigital/idm-seed",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@agiledigital/idm-ts-types": "1.0.3",
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/config": "^0.0.34",
+    "@types/jest": "^24.0.17",
+    "@types/lodash": "3.10.2",
+    "@types/node": "^12.6.8",
+    "@types/supertest": "^2.0.8",
+    "@types/webpack": "^4.32.1",
+    "babel-plugin-iife-wrap": "^1.1.0",
+    "glob": "^7.1.4",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "superagent-defaults": "^0.1.14",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-immutable": "^6.0.1",
+    "tslint-sonarts": "^1.9.0",
+    "type-coverage": "^2.1.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "yarn type-check -- --watch",
+    "build": "gen-idm-ts-types && webpack",
+    "watch": "gen-idm-ts-types && webpack -w",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "gen-idm-types": "gen-idm-ts-types",
+    "integration-test": "yarn jest --runInBand"
+  },
+  "dependencies": {},
+  "typeCoverage": {
+    "atLeast": 87
+  }
+}

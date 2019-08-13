@@ -1,0 +1,22 @@
+{
+    "idmTsCodeGen": {
+        "idmTsTypesOutputFile": "IDM_TS_TYPES",
+        "idmProjectConfigDir": "IDM_CONFIG_DIR",
+        "useUnknownInsteadOfAny": "IDM_TS_TYPES_USE_UNKNOWN",
+        "useUnknownInsteadOfAnyForManagedObj": "IDM_TS_TYPES_USE_UNKNOWN_MANAGED",
+        "useUnknownInsteadOfAnyForConnectorObj": "IDM_TS_TYPES_USE_UNKNOWN_CONNECTOR"
+    },
+    "integrationTesting": {
+        "baseUrl": "OPENIDM_BASE_URL",
+        "auth": {
+            "username": "OPENIDM_USERNAME",
+            "password": "OPENIDM_PASSWORD"
+        },
+        "ad": {
+            "baseDn": "AD_BASE_DN"
+        }
+    },
+    "webpack": {
+        "outputDir": "WEBPACK_OUTPUT_DIR"
+    }
+}

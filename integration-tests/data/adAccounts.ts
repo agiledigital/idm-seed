@@ -1,0 +1,31 @@
+export const initialValues = [
+    {
+        "_id": "123e4567-e89b-12d3-a456-426655440000",
+        "dn": "CN=John Citizen,OU=Users,OU=IntegrationTesting,DC=ad,DC=domain",
+        "cn": "John Citizen",
+        "isActive": true,
+        "givenName": "John",
+        "company": "initial value",
+        "memberOf": [],
+        "mail": "John.Citizen@integration.testing",
+        "skypeSipLine": "initial value",
+        "employeeNumber": "91087252",
+        "sAMAccountName": "int_u87252",
+        "employeeType": "initial value",
+        "department": "CEO\'s Office",
+        "userPrincipalName": "John.Citizen@integration.testing",
+        "displayName": "John Citizen",
+        "title": "initial value",
+        "whenChanged": "2018-12-12T01:10:56Z",
+        "countryCode": "0",
+        "physicalDeliveryOfficeName": "initial value",
+        "whenCreated": "2017-11-08T02:33:48Z",
+        "otherHomePhone": [],
+        "uSNChanged": "initial value",
+        "objectGUID": "123e4567-e89b-12d3-a456-426655440000",
+        "sn": "Citizen",
+        "uSNCreated": "initial value",
+        "telephoneNumber": "initial value",
+        "description": "initial value"
+    }
+];

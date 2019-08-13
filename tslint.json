@@ -1,0 +1,23 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-sonarts",
+        "tslint-config-prettier"
+    ],
+    "jsRules": {
+        "object-literal-sort-keys": false
+    },
+    "rules": {
+        "interface-over-type-literal": false,
+        "array-type": false,
+        "no-console": true,
+        "no-commented-code": false,
+        "only-arrow-functions": false,
+        "prefer-immediate-return": false,
+        "max-classes-per-file": false,
+        "no-var-keyword": false,
+        "object-literal-sort-keys": false
+    },
+    "rulesDirectory": []
+}
