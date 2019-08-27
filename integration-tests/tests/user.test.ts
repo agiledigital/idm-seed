@@ -42,7 +42,7 @@ describe('Loading data', () => {
         name                    | values                                  | resource
         ${"User accounts"}      | ${usersWithManagers.initialValues}      | ${openidmLib.system.usersWithManagers.users}
     `.test('loading $name data', async ( { values, resource }) => {
-        const result = await resource.create(values);
+        const result = await resource.createAll(values);
         const failures = result.filter(item => item.status !== 201);
         expect(failures.length).toBe(0);
     });

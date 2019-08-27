@@ -10,25 +10,6 @@ const api: supertest.SuperTest<supertest.Test> = defaults(supertest(`${intConfig
         "X-OpenIDM-Password": intConfig.auth.password
     });
 
-
-const sequence = async (head, tail, fn) => {
-    const res = await fn(head);
-    if(tail && tail.length > 0) {
-        return [res, ...(await sequence(tail[0], tail.splice(1), fn))]
-    }
-    else {
-        return [res];
-    }
-}
-
-const sequenceIfArray = (objectOrArray, fn) => {
-    if(Array.isArray(objectOrArray)) {
-        return objectOrArray.length ? sequence(objectOrArray[0], objectOrArray.splice(1), fn) : []
-    } else {
-        return fn(objectOrArray);
-    }
-}
-
 // TODO: Try and convert this over to the openidm object...
 // const resource = (path, queryFilter?) => {
 //     const query: QueryFilter | QueryIdParams = queryFilter ? { _queryFilter: queryFilter} : { _queryId: "query-all-ids" };
@@ -62,19 +43,16 @@ const resource = (path, queryFilter?) => {
         return api.get(`${path}?_fields=${fields}&${query}`)
     }
 
-
     const deleteSingle = (object) => api.delete(`${path}/${object._id}`);
 
-    const deleteMany = (objectOrArray) => sequenceIfArray(objectOrArray, deleteSingle);
-
-    const deleteAll = () => getAll().then(result => deleteMany(result.body.result));
+    const deleteAll = () => getAll().then(result => Promise.all(result.body.result.map(deleteSingle)))
 
     const createSingle = (object) => api.post(path).send(object);
 
-    const create = (objectOrArray) => sequenceIfArray(objectOrArray.slice(), createSingle);
+    const createAll = (objects: Record<string, any>[]) => Promise.all(objects.map(createSingle))
 
     return {
-        getAll, deleteAll, create
+        getAll, deleteAll, createAll
     };
 }
 

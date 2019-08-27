@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@agiledigital/idm-ts-types@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@agiledigital/idm-ts-types/-/idm-ts-types-1.0.3.tgz#b955a741107e90ee5b6c9e03f5f580a86671751e"
-  integrity sha512-Nu3x1PStXzj3dNIEuSh7n5wBuZGqwLoGEII2RVWEWehBh6DBa1cUVX3bITnUIn5YnlgN+DbRpindSjl8IVdtJg==
+"@agiledigital/idm-ts-types@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@agiledigital/idm-ts-types/-/idm-ts-types-1.0.6.tgz#72d71ccee902129a82c9723524bc1be5662c7790"
+  integrity sha512-bEPaWe7wFY1FBulnsnEZ0YiLBqqV3Qli3h2edCtaCC4A8qZB/vQ3TW0BBfZVKHOTIfzNPhWdBmO7rJcdP5tTIw==
   dependencies:
     camelcase "^5.3.1"
     config "^3.2.2"

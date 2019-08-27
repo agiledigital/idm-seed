@@ -38,6 +38,7 @@ exports.openidm = {
     },
     delete: async (
         resourceName,
+        rev,
         params,
         fields) => {
         const query = fields ? { _fields: fields} : {}
@@ -55,7 +56,6 @@ exports.openidm = {
         params,
         fields
     ) => {
-        // api.post(path).send(object);
         const query = fields ? { _fields: fields} : {}
         if (newResourceId) {
             content._id = newResourceId
@@ -66,5 +66,39 @@ exports.openidm = {
             .send(content)
 
         return resp.body
-    }
+    },
+    update: async (
+        resourceName,
+        rev,
+        value,
+        params,
+        fields
+    ) => {
+        const query = fields ? { _fields: fields} : {}
+
+        const resp = await addAuth(superagent
+            .put(`${baseUrl}/${resourceName}`)
+            .query(query))
+            .set('If-Match', '_rev')
+            .send(value)
+
+        return resp.body
+    },
+    patch: async (
+        resourceName,
+        rev,
+        value,
+        params,
+        fields
+    ) => {
+        const query = fields ? { _fields: fields} : {}
+
+        const resp = await addAuth(superagent
+            .patch(`${baseUrl}/${resourceName}`)
+            .query(query))
+            // .set('If-Match', '_rev')
+            .send(value)
+
+        return resp.body
+    },
 }
