@@ -126,6 +126,17 @@ exports["default"] = exports.idm;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 exports.__esModule = true;
 var IDMObject = /** @class */ (function () {
     function IDMObject(type) {
@@ -159,11 +170,12 @@ var IDMObject = /** @class */ (function () {
      * Create a relationship object for the given managed object and id.
      *
      * @param managedObjectId The managed object id to link to
+     * @param refProperties Any additional _refProperties to add to the relationship
      */
-    IDMObject.prototype.relationship = function (managedObjectId) {
-        return {
-            _ref: this.type + "/" + managedObjectId
-        };
+    IDMObject.prototype.relationship = function (managedObjectId, refProperties) {
+        if (refProperties === void 0) { refProperties = {}; }
+        var refProps = { _refProperties: refProperties };
+        return __assign({ _ref: this.type + "/" + managedObjectId }, refProps);
     };
     return IDMObject;
 }());
