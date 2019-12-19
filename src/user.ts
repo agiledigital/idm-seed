@@ -1,5 +1,8 @@
 import { idm, ManagedUser, SystemUsersWithManagersAccount } from "lib/idm";
 import _ from "lib/lodash";
+import { getLogger } from "./common";
+
+const logger = getLogger("seed.script.user");
 
 export const asyncLinkManager = (managedUser: ManagedUser) => {
   // Find out if there are any pending relationships
@@ -60,7 +63,8 @@ export const linkManager = (source: SystemUsersWithManagersAccount, target: Mana
 
       // Delete any pending relationships, incase they are sitting around, but it could be a different manager,
       // so leave out the unique key
-      const oldPendingRelationships = idm.managed.pendingRelationships.query({
+      const oldPendingRelationships = idm.managed.pendingRelationships.query(
+        {
           _queryFilter: `targetCollection eq '${idm.managed.user.type}' and sourceCollection eq '${idm.managed.user.type}' and sourceRelationshipProperty eq 'manager' and sourceUniqueKey eq '${target.userName}'`
         },
         {

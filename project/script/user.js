@@ -185,6 +185,86 @@ exports.idmObject = function (type) { return new IDMObject(type); };
 
 /***/ }),
 
+/***/ "./src/common.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+/**
+ * A wrapper around the slf4j logger.
+ *
+ * The wrapper is required because when calling java functions with var-args rhino is unable to select the correct logging function.
+ * This is because slf4j logging methods are being overloaded, and Rhino has trouble choosing between var-args and specific
+ *
+ * To be able to see the log output you need ensure that "%3$s" is added to the logging format, which is the logging class name.
+ *
+ * For example in logging.properties change:
+ *    java.util.logging.SimpleFormatter.format = %1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS.%1$tL %1$Tp %2$s%n%4$s: %5$s%6$s%n
+ * to:
+ *    java.util.logging.SimpleFormatter.format = %1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS.%1$tL %1$Tp %3$s %2$s%n%4$s: %5$s%6$s%n
+ *
+ * @param loggerName name of the logger to create
+ */
+exports.getLogger = function (loggerName) {
+    var underlyingLogger = org.slf4j.LoggerFactory.getLogger(loggerName);
+    return {
+        error: function (message) {
+            var rest = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                rest[_i - 1] = arguments[_i];
+            }
+            underlyingLogger.error(message, rest);
+        },
+        warn: function (message) {
+            var rest = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                rest[_i - 1] = arguments[_i];
+            }
+            underlyingLogger.warn(message, rest);
+        },
+        info: function (message) {
+            var rest = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                rest[_i - 1] = arguments[_i];
+            }
+            underlyingLogger.info(message, rest);
+        },
+        debug: function (message) {
+            var rest = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                rest[_i - 1] = arguments[_i];
+            }
+            underlyingLogger.debug(message, rest);
+        },
+        trace: function (message) {
+            var rest = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                rest[_i - 1] = arguments[_i];
+            }
+            underlyingLogger.trace(message, rest);
+        },
+        isErrorEnabled: function () {
+            return underlyingLogger.isErrorEnabled();
+        },
+        isWarnEnabled: function () {
+            return underlyingLogger.isWarnEnabled();
+        },
+        isInfoEnabled: function () {
+            return underlyingLogger.isInfoEnabled();
+        },
+        isDebugEnabled: function () {
+            return underlyingLogger.isDebugEnabled();
+        },
+        isTraceEnabled: function () {
+            return underlyingLogger.isTraceEnabled();
+        }
+    };
+};
+
+
+/***/ }),
+
 /***/ "./src/user.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -196,6 +276,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var idm_1 = __webpack_require__("./lib/idm.ts");
 var lodash_1 = __importDefault(__webpack_require__("lib/lodash"));
+var common_1 = __webpack_require__("./src/common.ts");
+var logger = common_1.getLogger("seed.script.user");
 exports.asyncLinkManager = function (managedUser) {
     // Find out if there are any pending relationships
     var params = {

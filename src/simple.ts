@@ -6,14 +6,14 @@ export const findOrCreateUserRelationship = (userName: string) => {
 };
 
 export const sonartsFailure = () => {
-  const test = ["first", "second", "third"]
+  const test = ["first", "second", "third"];
 
-  var curTest
+  var curTest;
   // tslint:disable-next-line: no-conditional-assignment
-  while (curTest = test.pop()) {
-    logger.info(`Current Test Value ${curTest}`)
+  while ((curTest = test.pop())) {
+    logger.info(`Current Test Value ${curTest}`);
   }
-}
+};
 
 /**
  * Count the number of users who directly and indirectly report to the given user.
