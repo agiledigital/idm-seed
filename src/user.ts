@@ -1,3 +1,4 @@
+import { allOf, equals, not, presence } from "@agiledigital/idm-ts-types/lib/query-filter";
 import { idm, ManagedUser, SystemUsersWithManagersAccount } from "lib/idm";
 import _ from "lib/lodash";
 import { getLogger } from "./common";
@@ -9,7 +10,11 @@ export const asyncLinkManager = (managedUser: ManagedUser) => {
   const params = {
     _queryFilter: `targetCollection eq '${idm.managed.user.type}' and targetUniqueKey eq '${managedUser.userName}' and !(actionTime pr)`
   };
-  const pending = idm.managed.pendingRelationships.query(params);
+  const pending = idm.managed.pendingRelationships.query({ filter: allOf(
+    equals("targetCollection", idm.managed.user.type),
+    equals("targetUniqueKey", managedUser.userName),
+    not(presence("actionTime"))
+  )});
 
   _(pending.result).forEach(pendingRel => {
     // Use the specified filter if it exists, otherwise assume the uniqueKey is the _id
@@ -65,7 +70,12 @@ export const linkManager = (source: SystemUsersWithManagersAccount, target: Mana
       // so leave out the unique key
       const oldPendingRelationships = idm.managed.pendingRelationships.query(
         {
-          _queryFilter: `targetCollection eq '${idm.managed.user.type}' and sourceCollection eq '${idm.managed.user.type}' and sourceRelationshipProperty eq 'manager' and sourceUniqueKey eq '${target.userName}'`
+          filter: allOf(
+            equals("targetCollection", idm.managed.user.type),
+            equals("sourceCollection", idm.managed.user.type),
+            equals("sourceRelationshipProperty", "manager"),
+            equals("sourceUniqueKey", target.userName)
+          )
         },
         {
           fields: ["_id"]

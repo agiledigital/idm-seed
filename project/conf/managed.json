@@ -377,17 +377,6 @@
                                             "name"
                                         ]
                                     }
-                                },
-                                {
-                                    "path" : "managed/role",
-                                    "label" : "Role",
-                                    "conditionalAssociationField" : "condition",
-                                    "query" : {
-                                        "queryFilter" : "true",
-                                        "fields" : [
-                                            "name"
-                                        ]
-                                    }
                                 }
                             ]
                         }
@@ -570,41 +559,37 @@
                         "viewable" : false,
                         "searchable" : false,
                         "userEditable" : true,
-                        "usageDescription" : null,
+                        "usageDescription" : "",
                         "isPersonal" : false,
                         "items" : {
-                            "type" : "array",
-                            "title" : "Consented Mappings Items",
-                            "items" : {
-                                "type" : "object",
-                                "title" : "Consented Mappings Item",
-                                "properties" : {
-                                    "mapping" : {
-                                        "title" : "Mapping",
-                                        "description" : "Mapping",
-                                        "type" : "string",
-                                        "viewable" : true,
-                                        "searchable" : true,
-                                        "userEditable" : true
-                                    },
-                                    "consentDate" : {
-                                        "title" : "Consent Date",
-                                        "description" : "Consent Date",
-                                        "type" : "string",
-                                        "viewable" : true,
-                                        "searchable" : true,
-                                        "userEditable" : true
-                                    }
+                            "type": "object",
+                            "title": "Consented Mapping",
+                            "properties": {
+                                "mapping": {
+                                    "title": "Mapping",
+                                    "description": "Mapping",
+                                    "type": "string",
+                                    "viewable": true,
+                                    "searchable": true,
+                                    "userEditable": true
                                 },
-                                "order" : [
-                                    "mapping",
-                                    "consentDate"
-                                ],
-                                "required" : [
-                                    "mapping",
-                                    "consentDate"
-                                ]
-                            }
+                                "consentDate": {
+                                    "title": "Consent Date",
+                                    "description": "Consent Date",
+                                    "type": "string",
+                                    "viewable": true,
+                                    "searchable": true,
+                                    "userEditable": true
+                                }
+                            },
+                            "order": [
+                                "mapping",
+                                "consentDate"
+                            ],
+                            "required": [
+                                "mapping",
+                                "consentDate"
+                            ]
                         },
                         "returnByDefault" : false,
                         "isVirtual" : false
