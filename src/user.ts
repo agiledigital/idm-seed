@@ -1,22 +1,18 @@
 import { allOf, equals, not, presence } from "@agiledigital/idm-ts-types/lib/query-filter";
 import { idm, ManagedUser, SystemUsersWithManagersAccount } from "lib/idm";
-import _ from "lib/lodash";
 import { getLogger } from "./common";
 
 const logger = getLogger("seed.script.user");
 
 export const asyncLinkManager = (managedUser: ManagedUser) => {
   // Find out if there are any pending relationships
-  const params = {
-    _queryFilter: `targetCollection eq '${idm.managed.user.type}' and targetUniqueKey eq '${managedUser.userName}' and !(actionTime pr)`
-  };
   const pending = idm.managed.pendingRelationships.query({ filter: allOf(
     equals("targetCollection", idm.managed.user.type),
     equals("targetUniqueKey", managedUser.userName),
     not(presence("actionTime"))
   )});
 
-  _(pending.result).forEach(pendingRel => {
+  pending.result.forEach(pendingRel => {
     // Use the specified filter if it exists, otherwise assume the uniqueKey is the _id
     const query = pendingRel.sourceQueryFilter ? pendingRel.sourceQueryFilter : `_id eq '${pendingRel.sourceUniqueKey}'`;
     const results = openidm.query(pendingRel.sourceCollection, { _queryFilter: query }, ["_id"]);
@@ -81,9 +77,7 @@ export const linkManager = (source: SystemUsersWithManagersAccount, target: Mana
           fields: ["_id"]
         }
       );
-      _.chain(oldPendingRelationships.result)
-        .pluck("_id")
-        .map((id: string) => idm.managed.pendingRelationships.delete(id, null));
+      oldPendingRelationships.result.forEach( rel => idm.managed.pendingRelationships.delete(rel._id, null));
     } else {
       // The manager doesn't exist yet, so we will link it up later
       idm.managed.pendingRelationships.create(null, {
