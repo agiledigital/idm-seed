@@ -1,4 +1,4 @@
-# ForgeRock IDM Seed Project
+# ForgeRock IDM Seed Project <!-- omit in toc -->
 
 The ForgeRock IDM Seed Project is a sample ForgeRock IDM project that shows off the TypeScript code generation from the [ForgeRock IDM TypeScript Types](https://github.com/agiledigital/idm-ts-types) while still targeting the Rhino JavaScript engine that ForgeRock IDM uses.
 
@@ -7,7 +7,20 @@ The key benefits are:
 * Integration Testing – Write end-to-end integration tests that work on real connectors, complete with test data clean-up and data generation.  Now you can have even greater levels of confidence with each deployment. 
 * Managed Object and Connector Type Generation – We've built a parser that can generate TypeScript types from your Managed Object and Connector types, this means that you can use your Managed Object or Connector types directly in TypeScript which enables IDE type-ahead assistance and type safety.
 * Integration Testing – Write end-to-end integration tests that work on real connectors, complete with test data clean-up and data generation.  Now you can have even greater levels of confidence with each deployment. 
-* Unit Testing (coming soon) – We've put together a unit testing framework that allows you to test your JavaScript/TypeScript code using the Rhino JavaScript engine with some convenient ready-to-use IDM API mocks.
+
+**Table of Contents**
+
+- [Dependencies](#dependencies)
+- [Assumptions](#assumptions)
+- [Common Commands](#common-commands)
+  - [Building your JavaScript](#building-your-javascript)
+  - [Running Integration Tests](#running-integration-tests)
+- [Including external libraries](#including-external-libraries)
+- [Notable Examples](#notable-examples)
+  - [Using TypeScript with Custom Scripted Policies](#using-typescript-with-custom-scripted-policies)
+- [Known Issues](#known-issues)
+  - [Complex fields not supported](#complex-fields-not-supported)
+- [TODO](#todo)
 
 ## Dependencies
 To get the most out of this seed project you should install the following dependencies
