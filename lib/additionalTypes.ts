@@ -23,6 +23,7 @@ type Policy = {
   policyExec: string;
   policyRequirements: string[];
   validateOnlyIfPresent?: boolean;
+  clientValidation?: boolean;
 };
 
 type PolicyRequirement = {

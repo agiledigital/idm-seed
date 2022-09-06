@@ -203,7 +203,18 @@
                         "searchable" : true,
                         "userEditable" : false,
                         "usageDescription" : null,
-                        "isPersonal" : false
+                        "isPersonal" : false,
+                        "policies" : [
+                            {
+                                "policyId" : "enumValue",
+                                "params" : {
+                                    "values": [
+                                        "active",
+                                        "inactive"
+                                    ]
+                                }
+                            }
+                        ]
                     },
                     "telephoneNumber" : {
                         "type" : "string",
