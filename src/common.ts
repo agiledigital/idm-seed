@@ -50,3 +50,6 @@ export const getLogger = loggerName => {
     }
   };
 };
+
+export const hasPlatformProvisioningRole = (context: RequestContext): boolean =>
+  context.security?.authorization?.roles.includes("internal/role/platform-provisioning") ?? false;

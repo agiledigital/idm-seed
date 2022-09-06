@@ -5,12 +5,12 @@
             "onCreate" : {
                 "type" : "text/javascript",
                 "globals" : { },
-                "source" : "require('onCreateUser').setDefaultFields(object);require('onCreateUser').emailUser(object);"
+                "source" : "require('onCreateUser').setDefaultFields(object);require('onCreateUser').emailUser(object);require('user').managedUserOnChange(object, context);"
             },
             "onUpdate" : {
                 "type" : "text/javascript",
                 "globals" : { },
-                "source" : "require('onUpdateUser').preserveLastSync(object, oldObject, request);"
+                "source" : "require('onUpdateUser').preserveLastSync(object, oldObject, request);require('user').managedUserOnChange(object, context, oldObject);"
             },
             "postDelete" : {
                 "type" : "text/javascript",
@@ -105,8 +105,48 @@
                                         "sn"
                                     ]
                                 }
+                            },
+                            {
+                                "policyId": "passwordHistory"
+                            },
+                            {
+                                "policyId": "addsPasswordComplexity"
                             }
                         ]
+                    },
+                    "passwordHistory": {
+                        "title": "Password Hash History",
+                        "type": "array",
+                        "viewable": false,
+                        "searchable": false,
+                        "userEditable": false,
+                        "items": {
+                          "type": "object",
+                          "properties": {},
+                          "order": [],
+                          "required": []
+                        },
+                        "description": null,
+                        "isVirtual": false,
+                        "deleteQueryConfig": false,
+                        "scope": "private"
+                    },
+                    "lastPasswordChange": {
+                        "title": "Last Password Change Date",
+                        "type": "string",
+                        "viewable": true,
+                        "searchable": false,
+                        "userEditable": false
+                    },
+                    "lastPasswordChangeUser": {
+                        "title": "User who last changed the password",
+                        "type": "string",
+                        "viewable": true,
+                        "searchable": false,
+                        "userEditable": false,
+                        "description": null,
+                        "isVirtual": false,
+                        "deleteQueryConfig": false
                     },
                     "givenName" : {
                         "title" : "First Name",
@@ -608,6 +648,7 @@
                     "_id",
                     "userName",
                     "password",
+                    "passwordHistory",
                     "givenName",
                     "sn",
                     "mail",
@@ -630,7 +671,9 @@
                     "kbaInfo",
                     "preferences",
                     "consentedMappings",
-                    "safeToSync"
+                    "safeToSync",
+                    "lastPasswordChange",
+                    "lastPasswordChangeUser"
                 ],
                 "required" : [
                     "userName",

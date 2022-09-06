@@ -61,6 +61,7 @@
     "baseUrl": "./",
   },
   "exclude": [
-    "./project/generated-script/"
+    "./project/generated-script/",
+    "./project/script/",
   ]
 }
