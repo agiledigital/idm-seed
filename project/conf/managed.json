@@ -5,12 +5,12 @@
             "onCreate" : {
                 "type" : "text/javascript",
                 "globals" : { },
-                "source" : "require('onCreateUser').setDefaultFields(object);require('onCreateUser').emailUser(object);"
+                "source" : "require('onCreateUser').setDefaultFields(object);require('onCreateUser').emailUser(object);require('user').managedUserOnChange(object, context);"
             },
             "onUpdate" : {
                 "type" : "text/javascript",
                 "globals" : { },
-                "source" : "require('onUpdateUser').preserveLastSync(object, oldObject, request);"
+                "source" : "require('onUpdateUser').preserveLastSync(object, oldObject, request);require('user').managedUserOnChange(object, context, oldObject);"
             },
             "postDelete" : {
                 "type" : "text/javascript",
@@ -105,8 +105,48 @@
                                         "sn"
                                     ]
                                 }
+                            },
+                            {
+                                "policyId": "passwordHistory"
+                            },
+                            {
+                                "policyId": "addsPasswordComplexity"
                             }
                         ]
+                    },
+                    "passwordHistory": {
+                        "title": "Password Hash History",
+                        "type": "array",
+                        "viewable": false,
+                        "searchable": false,
+                        "userEditable": false,
+                        "items": {
+                          "type": "object",
+                          "properties": {},
+                          "order": [],
+                          "required": []
+                        },
+                        "description": null,
+                        "isVirtual": false,
+                        "deleteQueryConfig": false,
+                        "scope": "private"
+                    },
+                    "lastPasswordChange": {
+                        "title": "Last Password Change Date",
+                        "type": "string",
+                        "viewable": true,
+                        "searchable": false,
+                        "userEditable": false
+                    },
+                    "lastPasswordChangeUser": {
+                        "title": "User who last changed the password",
+                        "type": "string",
+                        "viewable": true,
+                        "searchable": false,
+                        "userEditable": false,
+                        "description": null,
+                        "isVirtual": false,
+                        "deleteQueryConfig": false
                     },
                     "givenName" : {
                         "title" : "First Name",
@@ -163,7 +203,18 @@
                         "searchable" : true,
                         "userEditable" : false,
                         "usageDescription" : null,
-                        "isPersonal" : false
+                        "isPersonal" : false,
+                        "policies" : [
+                            {
+                                "policyId" : "enumValue",
+                                "params" : {
+                                    "values": [
+                                        "active",
+                                        "inactive"
+                                    ]
+                                }
+                            }
+                        ]
                     },
                     "telephoneNumber" : {
                         "type" : "string",
@@ -377,17 +428,6 @@
                                             "name"
                                         ]
                                     }
-                                },
-                                {
-                                    "path" : "managed/role",
-                                    "label" : "Role",
-                                    "conditionalAssociationField" : "condition",
-                                    "query" : {
-                                        "queryFilter" : "true",
-                                        "fields" : [
-                                            "name"
-                                        ]
-                                    }
                                 }
                             ]
                         }
@@ -570,41 +610,37 @@
                         "viewable" : false,
                         "searchable" : false,
                         "userEditable" : true,
-                        "usageDescription" : null,
+                        "usageDescription" : "",
                         "isPersonal" : false,
                         "items" : {
-                            "type" : "array",
-                            "title" : "Consented Mappings Items",
-                            "items" : {
-                                "type" : "object",
-                                "title" : "Consented Mappings Item",
-                                "properties" : {
-                                    "mapping" : {
-                                        "title" : "Mapping",
-                                        "description" : "Mapping",
-                                        "type" : "string",
-                                        "viewable" : true,
-                                        "searchable" : true,
-                                        "userEditable" : true
-                                    },
-                                    "consentDate" : {
-                                        "title" : "Consent Date",
-                                        "description" : "Consent Date",
-                                        "type" : "string",
-                                        "viewable" : true,
-                                        "searchable" : true,
-                                        "userEditable" : true
-                                    }
+                            "type": "object",
+                            "title": "Consented Mapping",
+                            "properties": {
+                                "mapping": {
+                                    "title": "Mapping",
+                                    "description": "Mapping",
+                                    "type": "string",
+                                    "viewable": true,
+                                    "searchable": true,
+                                    "userEditable": true
                                 },
-                                "order" : [
-                                    "mapping",
-                                    "consentDate"
-                                ],
-                                "required" : [
-                                    "mapping",
-                                    "consentDate"
-                                ]
-                            }
+                                "consentDate": {
+                                    "title": "Consent Date",
+                                    "description": "Consent Date",
+                                    "type": "string",
+                                    "viewable": true,
+                                    "searchable": true,
+                                    "userEditable": true
+                                }
+                            },
+                            "order": [
+                                "mapping",
+                                "consentDate"
+                            ],
+                            "required": [
+                                "mapping",
+                                "consentDate"
+                            ]
                         },
                         "returnByDefault" : false,
                         "isVirtual" : false
@@ -623,6 +659,7 @@
                     "_id",
                     "userName",
                     "password",
+                    "passwordHistory",
                     "givenName",
                     "sn",
                     "mail",
@@ -645,7 +682,9 @@
                     "kbaInfo",
                     "preferences",
                     "consentedMappings",
-                    "safeToSync"
+                    "safeToSync",
+                    "lastPasswordChange",
+                    "lastPasswordChangeUser"
                 ],
                 "required" : [
                     "userName",

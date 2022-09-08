@@ -1,4 +1,5 @@
-import { idm, ManagedUser } from "lib/idm";
+import { idm } from "lib/idm";
+import _ from "lib/lodash";
 
 export const findOrCreateUserRelationship = (userName: string) => {
   logger.info(`Linking to ${userName}`);

@@ -17,6 +17,6 @@
         }
     },
     "webpack": {
-        "outputDir": "./project/script"
+        "outputDir": "./project/generated-script"
     }
 }
